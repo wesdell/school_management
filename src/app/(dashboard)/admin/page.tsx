@@ -1,6 +1,8 @@
 import {
+  Announcements,
   AttendanceChart,
   CountChart,
+  EventCalendar,
   FinanceChart,
   UserCard,
 } from "@/components";
@@ -27,7 +29,10 @@ export default function Admin() {
           <FinanceChart />
         </div>
       </div>
-      <div className="w-full lg:w-1/3"></div>
+      <div className="flex flex-col gap-8 w-full lg:w-1/3">
+        <EventCalendar />
+        <Announcements />
+      </div>
     </div>
   );
 }
