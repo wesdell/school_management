@@ -6,4 +6,7 @@ export * from "./EventCalendar";
 export * from "./FinanceChart";
 export * from "./Menu";
 export * from "./NavBar";
+export * from "./Pagination";
+export * from "./Table";
+export * from "./TableSearch";
 export * from "./UserCard";
