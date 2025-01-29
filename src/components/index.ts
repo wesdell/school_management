@@ -1,5 +1,6 @@
 export * from "./Announcements";
 export * from "./AttendanceChart";
+export * from "./BigCalendar";
 export * from "./CountChart";
 export * from "./EventCalendar";
 export * from "./FinanceChart";
