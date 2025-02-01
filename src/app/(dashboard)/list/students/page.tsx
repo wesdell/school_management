@@ -99,11 +99,11 @@ export default function ListStudents() {
               <Image src="/filter.png" alt="Filter" width={14} height={14} />
             </button>
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-yellow">
-              <Image src="/sort.png" alt="Filter" width={14} height={14} />
+              <Image src="/sort.png" alt="Sort" width={14} height={14} />
             </button>
             {role === "admin" && (
               <button className="w-8 h-8 flex items-center justify-center rounded-full bg-yellow">
-                <Image src="/plus.png" alt="Filter" width={14} height={14} />
+                <Image src="/create.png" alt="Create" width={14} height={14} />
               </button>
             )}
           </div>
