@@ -12,10 +12,10 @@ export const NavBar = () => {
         />
       </div>
       <div className="w-full flex items-center justify-end gap-6">
-        <div className="flex items-center justify-center w-7 h-7 rounden-full bg-white cursor-pointer">
+        <div className="flex items-center justify-center w-7 h-7 rounded-full bg-white cursor-pointer">
           <Image src="/message.png" alt="Message icon" width={20} height={20} />
         </div>
-        <div className="relative flex items-center justify-center w-7 h-7 rounden-full bg-white cursor-pointer">
+        <div className="relative flex items-center justify-center w-7 h-7 rounded-full bg-white cursor-pointer">
           <Image
             src="/announcement.png"
             alt="Announcement icon"
