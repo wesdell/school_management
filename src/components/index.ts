@@ -4,6 +4,8 @@ export * from "./BigCalendar";
 export * from "./CountChart";
 export * from "./EventCalendar";
 export * from "./FinanceChart";
+export * from "./FormModal";
+export * from "./InputField";
 export * from "./Menu";
 export * from "./NavBar";
 export * from "./Pagination";
