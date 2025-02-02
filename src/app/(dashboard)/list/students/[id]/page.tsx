@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Announcements, BigCalendar, Performance } from "@/components";
+import { Announcements, BigCalendar, PerformanceChart } from "@/components";
 
 export default function ListStudentsById() {
   return (
@@ -141,7 +141,7 @@ export default function ListStudentsById() {
             </Link>
           </div>
         </div>
-        <Performance />
+        <PerformanceChart />
         <Announcements />
       </div>
     </div>

@@ -5,7 +5,7 @@ import {
   Announcements,
   BigCalendar,
   FormModal,
-  Performance,
+  PerformanceChart,
 } from "@/components";
 
 export default function ListTeachersById() {
@@ -169,7 +169,7 @@ export default function ListTeachersById() {
             </Link>
           </div>
         </div>
-        <Performance />
+        <PerformanceChart />
         <Announcements />
       </div>
     </div>
