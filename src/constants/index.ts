@@ -112,3 +112,59 @@ export const menuItems = [
     ],
   },
 ];
+
+export const teacherShortcuts = [
+  {
+    name: "Teacher's classes",
+    href: "/",
+    bgColor: "bg-skyLight",
+  },
+  {
+    name: "Teacher's students",
+    href: "/",
+    bgColor: "bg-yellowLight",
+  },
+  {
+    name: "Teacher's lessons",
+    href: "/",
+    bgColor: "bg-purpleLight",
+  },
+  {
+    name: "Teacher's exams",
+    href: "/",
+    bgColor: "bg-yellowLight",
+  },
+  {
+    name: "Teacher's assignments",
+    href: "/",
+    bgColor: "bg-skyLight",
+  },
+];
+
+export const studentShortcuts = [
+  {
+    name: "Student's results",
+    href: "/",
+    bgColor: "bg-skyLight",
+  },
+  {
+    name: "Student's teachers",
+    href: "/",
+    bgColor: "bg-yellowLight",
+  },
+  {
+    name: "Student's lessons",
+    href: "/",
+    bgColor: "bg-purpleLight",
+  },
+  {
+    name: "Student's exams",
+    href: "/",
+    bgColor: "bg-yellowLight",
+  },
+  {
+    name: "Student's assignments",
+    href: "/",
+    bgColor: "bg-skyLight",
+  },
+];
