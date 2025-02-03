@@ -152,19 +152,19 @@ export default function ListTeachersById() {
         <div className="p-4 rounded-md bg-white">
           <h2 className="text-xl font-semibold">Shortcuts</h2>
           <div className="flex flex-wrap gap-4 mt-4 text-xs text-gray-500">
-            <Link href="/" className="p-3 rounded-md bg-skyLight">
+            <Link href="/public" className="p-3 rounded-md bg-skyLight">
               Teacher&apos;s classes
             </Link>
-            <Link href="/" className="p-3 rounded-md bg-purpleLight">
+            <Link href="/public" className="p-3 rounded-md bg-purpleLight">
               Teacher&apos;s students
             </Link>
-            <Link href="/" className="p-3 rounded-md bg-yellowLight">
+            <Link href="/public" className="p-3 rounded-md bg-yellowLight">
               Teacher&apos;s lessons
             </Link>
-            <Link href="/" className="p-3 rounded-md bg-purpleLight">
+            <Link href="/public" className="p-3 rounded-md bg-purpleLight">
               Teacher&apos;s exams
             </Link>
-            <Link href="/" className="p-3 rounded-md bg-skyLight">
+            <Link href="/public" className="p-3 rounded-md bg-skyLight">
               Teacher&apos;s assignments
             </Link>
           </div>
