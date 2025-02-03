@@ -14,7 +14,19 @@ export default function ListLayout({
 }>) {
   const pathname = usePathname();
   const title = getTitleFromPath(pathname);
-  const canCreateForm = title.slice(0, -1).toLowerCase();
+  const canCreateForm = title.slice(0, -1).toLowerCase() as
+    | "teacher"
+    | "student"
+    | "parent"
+    | "subject"
+    | "class"
+    | "lesson"
+    | "exam"
+    | "assignment"
+    | "result"
+    | "attendance"
+    | "event"
+    | "announcement";
 
   return (
     <div className="flex-1 p-4 bg-white rounded-md m-4 mt-0">
