@@ -89,7 +89,7 @@ export default function ListTeachersById() {
             </div>
           </div>
           <div className="flex flex-wrap flex-1 justify-between gap-4">
-            <div className="flex gap-4 w-full md:w-[48%] lg:w-[47%] p-4 rounded-md bg-white">
+            <div className="flex gap-4 w-full md:w-[48%] lg:w-[47%] p-4 rounded-md bg-red">
               <Image
                 src="/singleAttendance.png"
                 alt="Attendance"
