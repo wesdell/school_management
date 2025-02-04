@@ -1,5 +1,5 @@
 import { parentsData, role } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
+import { FormModal, Table } from "@/components";
 
 type Parent = {
   id: number;
@@ -61,10 +61,5 @@ export default function ListParents() {
     </tr>
   );
 
-  return (
-    <>
-      <Table columns={columns} data={parentsData} renderRow={renderRow} />
-      <Pagination />
-    </>
-  );
+  return <Table columns={columns} data={parentsData} renderRow={renderRow} />;
 }

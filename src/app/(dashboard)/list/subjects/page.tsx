@@ -1,5 +1,5 @@
 import { role, subjectsData } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
+import { FormModal, Table } from "@/components";
 
 type Subject = {
   id: number;
@@ -41,10 +41,5 @@ export default function ListSubjects() {
     </tr>
   );
 
-  return (
-    <>
-      <Table columns={columns} data={subjectsData} renderRow={renderRow} />
-      <Pagination />
-    </>
-  );
+  return <Table columns={columns} data={subjectsData} renderRow={renderRow} />;
 }

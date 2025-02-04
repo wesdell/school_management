@@ -11,6 +11,7 @@ import {
   Announcements,
   BigCalendar,
   FormModal,
+  Pagination,
   PerformanceChart,
   TableSearch,
 } from "@/components";
@@ -89,6 +90,7 @@ export default function ListLayout({
         </div>
       </div>
       {children}
+      <Pagination />
     </div>
   );
 }

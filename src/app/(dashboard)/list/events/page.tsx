@@ -1,5 +1,5 @@
 import { eventsData, role } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
+import { FormModal, Table } from "@/components";
 
 type Event = {
   id: number;
@@ -58,10 +58,5 @@ export default function ListEvents() {
     </tr>
   );
 
-  return (
-    <>
-      <Table columns={columns} data={eventsData} renderRow={renderRow} />
-      <Pagination />
-    </>
-  );
+  return <Table columns={columns} data={eventsData} renderRow={renderRow} />;
 }

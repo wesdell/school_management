@@ -1,5 +1,5 @@
 import { lessonsData, role } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
+import { FormModal, Table } from "@/components";
 
 type Lesson = {
   id: number;
@@ -44,10 +44,5 @@ export default function ListLessons() {
     </tr>
   );
 
-  return (
-    <>
-      <Table columns={columns} data={lessonsData} renderRow={renderRow} />
-      <Pagination />
-    </>
-  );
+  return <Table columns={columns} data={lessonsData} renderRow={renderRow} />;
 }

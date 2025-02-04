@@ -1,5 +1,5 @@
 import { announcementsData, role } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
+import { FormModal, Table } from "@/components";
 
 type Announcement = {
   id: number;
@@ -45,9 +45,6 @@ export default function ListAnnouncements() {
   );
 
   return (
-    <>
-      <Table columns={columns} data={announcementsData} renderRow={renderRow} />
-      <Pagination />
-    </>
+    <Table columns={columns} data={announcementsData} renderRow={renderRow} />
   );
 }

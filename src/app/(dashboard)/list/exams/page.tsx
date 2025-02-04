@@ -1,5 +1,5 @@
 import { examsData, role } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
+import { FormModal, Table } from "@/components";
 
 type Exam = {
   id: number;
@@ -51,10 +51,5 @@ export default function ListExams() {
     </tr>
   );
 
-  return (
-    <>
-      <Table columns={columns} data={examsData} renderRow={renderRow} />
-      <Pagination />
-    </>
-  );
+  return <Table columns={columns} data={examsData} renderRow={renderRow} />;
 }

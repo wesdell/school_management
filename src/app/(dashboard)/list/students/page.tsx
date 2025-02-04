@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { role, studentsData } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
+import { FormModal, Table } from "@/components";
 
 type Student = {
   id: number;
@@ -81,10 +81,5 @@ export default function ListStudents() {
     </tr>
   );
 
-  return (
-    <>
-      <Table columns={columns} data={studentsData} renderRow={renderRow} />
-      <Pagination />
-    </>
-  );
+  return <Table columns={columns} data={studentsData} renderRow={renderRow} />;
 }

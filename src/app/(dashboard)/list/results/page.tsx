@@ -1,5 +1,5 @@
 import { resultsData, role } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
+import { FormModal, Table } from "@/components";
 
 type Result = {
   id: number;
@@ -66,10 +66,5 @@ export default function ListResults() {
     </tr>
   );
 
-  return (
-    <>
-      <Table columns={columns} data={resultsData} renderRow={renderRow} />
-      <Pagination />
-    </>
-  );
+  return <Table columns={columns} data={resultsData} renderRow={renderRow} />;
 }

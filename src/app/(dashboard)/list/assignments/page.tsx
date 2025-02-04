@@ -1,5 +1,5 @@
 import { assignmentsData, role } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
+import { FormModal, Table } from "@/components";
 
 type Assignment = {
   id: number;
@@ -52,9 +52,6 @@ export default function ListAssignments() {
   );
 
   return (
-    <>
-      <Table columns={columns} data={assignmentsData} renderRow={renderRow} />
-      <Pagination />
-    </>
+    <Table columns={columns} data={assignmentsData} renderRow={renderRow} />
   );
 }
