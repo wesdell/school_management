@@ -55,6 +55,7 @@ export default function ListLayout({
             <div className="flex flex-wrap gap-4 mt-4 text-xs text-gray-500">
               {shortcuts.map((shortcut: any) => (
                 <Link
+                  key={shortcut.name}
                   href={shortcut.href}
                   className={`p-3 rounded-md ${shortcut.bgColor}`}
                 >
