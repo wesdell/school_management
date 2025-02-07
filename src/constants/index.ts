@@ -168,3 +168,5 @@ export const studentShortcuts = [
     bgColor: "bg-skyLight",
   },
 ];
+
+export const RECORDS_PER_PAGE = 10;
