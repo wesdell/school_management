@@ -4,7 +4,7 @@ import { Class, Subject, Teacher } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { role } from "@/mock/data";
 import { RECORDS_PER_PAGE } from "@/constants";
-import { FormModal, Table } from "@/components";
+import { FormModal, Pagination, Table } from "@/components";
 
 type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
@@ -76,18 +76,34 @@ const renderRow = (item: TeacherList) => (
           </button>
         </Link>
         {role === "admin" && (
-          <FormModal id={item.id} type="delete" table="teacher" />
+          <FormModal id={parseInt(item.id)} type="delete" table="teacher" />
         )}
       </div>
     </td>
   </tr>
 );
 
-export default async function ListTeachers() {
-  const teachers = await prisma.teacher.findMany({
-    include: { subjects: true, classes: true },
-    take: RECORDS_PER_PAGE,
-  });
+export default async function ListTeachers({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
+  const { page, ...params } = await searchParams;
+  const actualPage = page ? parseInt(page) : 1;
 
-  return <Table columns={columns} data={teachers} renderRow={renderRow} />;
+  const [teachers, count] = await prisma.$transaction([
+    prisma.teacher.findMany({
+      include: { subjects: true, classes: true },
+      take: RECORDS_PER_PAGE,
+      skip: RECORDS_PER_PAGE * (actualPage - 1),
+    }),
+    prisma.teacher.count(),
+  ]);
+
+  return (
+    <>
+      <Table columns={columns} data={teachers} renderRow={renderRow} />
+      <Pagination page={actualPage} count={count} />
+    </>
+  );
 }
