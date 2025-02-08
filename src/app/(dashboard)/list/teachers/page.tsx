@@ -106,6 +106,9 @@ export default async function ListTeachers({
             query.name = { contains: value, mode: "insensitive" };
             break;
           }
+          default: {
+            break;
+          }
         }
       }
     }

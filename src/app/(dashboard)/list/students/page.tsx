@@ -98,6 +98,9 @@ export default async function ListStudents({
             query.name = { contains: value, mode: "insensitive" };
             break;
           }
+          default: {
+            break;
+          }
         }
       }
     }
