@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Class, Subject, Teacher } from "@prisma/client";
+import { Class, Prisma, Subject, Teacher } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 import { role } from "@/mock/data";
 import { RECORDS_PER_PAGE } from "@/constants";
 import { FormModal, Pagination, Table } from "@/components";
