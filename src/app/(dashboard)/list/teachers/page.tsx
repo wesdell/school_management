@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Class, Subject, Teacher } from "@prisma/client";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { role } from "@/mock/data";
 import { RECORDS_PER_PAGE } from "@/constants";
 import { FormModal, Pagination, Table } from "@/components";
@@ -86,18 +87,35 @@ const renderRow = (item: TeacherList) => (
 export default async function ListTeachers({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: { [_: string]: string | undefined };
 }) {
   const { page, ...params } = await searchParams;
   const actualPage = page ? parseInt(page) : 1;
 
+  const query: Prisma.TeacherWhereInput = {};
+  if (params) {
+    for (const [key, value] of Object.entries(params)) {
+      if (value !== undefined) {
+        switch (key) {
+          case "classId":
+            query.lessons = {
+              some: { classId: parseInt(params.classId!) },
+            };
+        }
+      }
+    }
+  }
+
   const [teachers, count] = await prisma.$transaction([
     prisma.teacher.findMany({
+      where: query,
       include: { subjects: true, classes: true },
       take: RECORDS_PER_PAGE,
       skip: RECORDS_PER_PAGE * (actualPage - 1),
     }),
-    prisma.teacher.count(),
+    prisma.teacher.count({
+      where: query,
+    }),
   ]);
 
   return (
