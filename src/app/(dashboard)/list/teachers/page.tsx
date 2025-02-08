@@ -97,10 +97,16 @@ export default async function ListTeachers({
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined) {
         switch (key) {
-          case "classId":
+          case "classId": {
             query.lessons = {
               some: { classId: parseInt(params.classId!) },
             };
+            break;
+          }
+          case "search": {
+            query.name = { contains: value, mode: "insensitive" };
+            break;
+          }
         }
       }
     }
