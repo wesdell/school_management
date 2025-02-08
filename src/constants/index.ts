@@ -121,7 +121,7 @@ export const teacherShortcuts = [
   },
   {
     name: "Teacher's students",
-    href: "/",
+    href: "/list/students?teacherId=teacher2",
     bgColor: "bg-yellowLight",
   },
   {
@@ -149,7 +149,7 @@ export const studentShortcuts = [
   },
   {
     name: "Student's teachers",
-    href: "/",
+    href: "/list/teachers?classId=1",
     bgColor: "bg-yellowLight",
   },
   {
