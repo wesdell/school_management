@@ -116,7 +116,7 @@ export const menuItems = [
 export const teacherShortcuts = [
   {
     name: "Teacher's classes",
-    href: "/",
+    href: "/list/classes?supervisorId=teacher2",
     bgColor: "bg-skyLight",
   },
   {
