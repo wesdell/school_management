@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Form } from "@/components";
 
 interface Props {
-  id?: number;
+  id?: number | string;
   type: "create" | "update" | "delete";
   data?: any;
   table:
