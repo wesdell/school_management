@@ -126,17 +126,17 @@ export const teacherShortcuts = [
   },
   {
     name: "Teacher's lessons",
-    href: "/",
+    href: "/list/lessons?teacherId=teacher2",
     bgColor: "bg-purpleLight",
   },
   {
     name: "Teacher's exams",
-    href: "/",
+    href: "/list/exams?teacherId=teacher2",
     bgColor: "bg-yellowLight",
   },
   {
     name: "Teacher's assignments",
-    href: "/",
+    href: "/list/assignments?teacherId=teacher2",
     bgColor: "bg-skyLight",
   },
 ];
@@ -144,7 +144,7 @@ export const teacherShortcuts = [
 export const studentShortcuts = [
   {
     name: "Student's results",
-    href: "/",
+    href: "/list/results?studentId=student2",
     bgColor: "bg-skyLight",
   },
   {
@@ -154,17 +154,17 @@ export const studentShortcuts = [
   },
   {
     name: "Student's lessons",
-    href: "/",
+    href: "/list/lessons?classId=1",
     bgColor: "bg-purpleLight",
   },
   {
     name: "Student's exams",
-    href: "/",
+    href: "/list/exams?classId=1",
     bgColor: "bg-yellowLight",
   },
   {
     name: "Student's assignments",
-    href: "/",
+    href: "/list/assignments?classId=1",
     bgColor: "bg-skyLight",
   },
 ];
