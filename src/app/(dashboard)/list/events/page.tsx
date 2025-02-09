@@ -1,14 +1,10 @@
-import { eventsData, role } from "@/mock/data";
-import { FormModal, Table } from "@/components";
+import { Class, Event, Prisma } from "@prisma/client";
+import prisma from "@/lib/prisma";
+import { role } from "@/mock/data";
+import { RECORDS_PER_PAGE } from "@/constants";
+import { FormModal, Pagination, Table } from "@/components";
 
-type Event = {
-  id: number;
-  title: string;
-  class: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-};
+type EventList = Event & { class: Class };
 
 const columns = [
   { header: "Title", accessor: "title" },
@@ -34,29 +30,84 @@ const columns = [
   },
 ];
 
-export default function ListEvents() {
-  const renderRow = (item: Event) => (
-    <tr
-      key={item.id}
-      className="text-sm border-b border-gray-200 even:bg-slate-50 hover:bg-purpleLight"
-    >
-      <td className="flex items-center gap-4 p-4">{item.title}</td>
-      <td>{item.class}</td>
-      <td className="hidden md:table-cell">{item.date}</td>
-      <td className="hidden md:table-cell">{item.startTime}</td>
-      <td className="hidden md:table-cell">{item.endTime}</td>
-      <td>
-        <div className="flex items-center gap-2">
-          {role === "admin" && (
-            <>
-              <FormModal table="event" type="update" data={item} />
-              <FormModal table="event" type="delete" id={item.id} />
-            </>
-          )}
-        </div>
-      </td>
-    </tr>
-  );
+const renderRow = (item: EventList) => (
+  <tr
+    key={item.id}
+    className="text-sm border-b border-gray-200 even:bg-slate-50 hover:bg-purpleLight"
+  >
+    <td className="flex items-center gap-4 p-4">{item.title}</td>
+    <td>{item.class.name}</td>
+    <td className="hidden md:table-cell">
+      {new Intl.DateTimeFormat("en-US").format(item.startTime)}
+    </td>
+    <td className="hidden md:table-cell">
+      {item.startTime.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })}
+    </td>
+    <td className="hidden md:table-cell">
+      {item.endTime.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })}
+    </td>
+    <td>
+      <div className="flex items-center gap-2">
+        {role === "admin" && (
+          <>
+            <FormModal table="event" type="update" data={item} />
+            <FormModal table="event" type="delete" id={item.id} />
+          </>
+        )}
+      </div>
+    </td>
+  </tr>
+);
 
-  return <Table columns={columns} data={eventsData} renderRow={renderRow} />;
+export default async function ListEvents({
+  searchParams,
+}: {
+  searchParams: { [_: string]: string | undefined };
+}) {
+  const { page, ...params } = await searchParams;
+  const actualPage = page ? parseInt(page) : 1;
+
+  const query: Prisma.EventWhereInput = {};
+  if (params) {
+    for (const [key, value] of Object.entries(params)) {
+      if (value !== undefined) {
+        switch (key) {
+          case "search": {
+            query.title = { contains: value, mode: "insensitive" };
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  const [events, count] = await prisma.$transaction([
+    prisma.event.findMany({
+      where: query,
+      include: { class: true },
+      take: RECORDS_PER_PAGE,
+      skip: RECORDS_PER_PAGE * (actualPage - 1),
+    }),
+    prisma.event.count({
+      where: query,
+    }),
+  ]);
+
+  return (
+    <>
+      <Table columns={columns} data={events} renderRow={renderRow} />
+      <Pagination page={actualPage} count={count} />
+    </>
+  );
 }
