@@ -1,6 +1,12 @@
-import Image from "next/image";
+"use server";
 
-export const NavBar = () => {
+import Image from "next/image";
+import { currentUser } from "@clerk/nextjs/server";
+
+export const NavBar = async () => {
+  const user = await currentUser();
+  const role = user?.publicMetadata.role as string;
+
   return (
     <div className="flex items-center justify-between p-4">
       <div className="hidden md:flex items-center gap-2 text-xs rounded-full ring-[1.5px] ring-gray-300 px-2">
@@ -28,7 +34,9 @@ export const NavBar = () => {
         </div>
         <div className="flex flex-col">
           <span className="text-xs leading-3 font-medium">User</span>
-          <span className="text-[10px] text-gray-500 text-right">Admin</span>
+          <span className="text-[10px] text-gray-500 text-right capitalize">
+            {role}
+          </span>
         </div>
         <Image
           src="/avatar.png"
