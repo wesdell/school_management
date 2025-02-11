@@ -23,10 +23,14 @@ const columns = [
     accessor: "dueDate",
     className: "hidden md:table-cell",
   },
-  {
-    header: "Actions",
-    accessor: "actions",
-  },
+  ...(role === "admin" || role === "teacher"
+    ? [
+        {
+          header: "Actions",
+          accessor: "actions",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: AssignmentList) => (
@@ -91,8 +95,34 @@ export default async function ListAssignments({
     }
   }
 
-  if (userId && role === "teacher") {
-    query.lesson.teacherId = userId;
+  switch (role) {
+    case "teacher": {
+      query.lesson.teacherId = userId!;
+      break;
+    }
+    case "student": {
+      query.lesson.class = {
+        students: {
+          some: {
+            id: userId!,
+          },
+        },
+      };
+      break;
+    }
+    case "parent": {
+      query.lesson.class = {
+        students: {
+          some: {
+            parentId: userId!,
+          },
+        },
+      };
+      break;
+    }
+    default: {
+      break;
+    }
   }
 
   const [assignments, count] = await prisma.$transaction([
