@@ -1,11 +1,9 @@
-"use server";
-
 import Image from "next/image";
-import { currentUser } from "@clerk/nextjs/server";
+import { UserButton } from "@clerk/nextjs";
+import { useRole } from "@/hooks";
 
 export const NavBar = async () => {
-  const user = await currentUser();
-  const role = user?.publicMetadata.role as string;
+  const { role } = await useRole();
 
   return (
     <div className="flex items-center justify-between p-4">
@@ -38,13 +36,14 @@ export const NavBar = async () => {
             {role}
           </span>
         </div>
-        <Image
-          src="/avatar.png"
-          alt="Avatar"
-          width={36}
-          height={36}
-          className="rounded-full"
-        />
+        {/*<Image*/}
+        {/*  src="/avatar.png"*/}
+        {/*  alt="Avatar"*/}
+        {/*  width={36}*/}
+        {/*  height={36}*/}
+        {/*  className="rounded-full"*/}
+        {/*/>*/}
+        <UserButton />
       </div>
     </div>
   );

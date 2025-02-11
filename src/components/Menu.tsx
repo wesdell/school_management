@@ -1,13 +1,10 @@
-"use server";
-
 import Link from "next/link";
 import Image from "next/image";
-import { currentUser } from "@clerk/nextjs/server";
+import { useRole } from "@/hooks";
 import { menuItems } from "@/constants";
 
 export const Menu = async () => {
-  const user = await currentUser();
-  const role = user?.publicMetadata.role as string;
+  const { role } = await useRole();
 
   return (
     <div className="mt-4 text-sm">
