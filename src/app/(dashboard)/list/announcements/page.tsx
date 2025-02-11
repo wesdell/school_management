@@ -1,10 +1,12 @@
 import { Announcement, Class, Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { role } from "@/mock/data";
+import { useRole } from "@/hooks";
 import { RECORDS_PER_PAGE } from "@/constants";
 import { FormModal, Pagination, Table } from "@/components";
 
 type AnnouncementList = Announcement & { class: Class };
+
+const { role } = await useRole();
 
 const columns = [
   { header: "Title", accessor: "title" },
@@ -14,10 +16,14 @@ const columns = [
     accessor: "date",
     className: "hidden md:table-cell",
   },
-  {
-    header: "Actions",
-    accessor: "actions",
-  },
+  ...(role === "admin"
+    ? [
+        {
+          header: "Actions",
+          accessor: "actions",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: AnnouncementList) => (
