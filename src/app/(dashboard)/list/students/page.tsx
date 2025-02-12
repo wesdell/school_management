@@ -1,12 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { role } from "@/mock/data";
-import { FormModal, Pagination, Table } from "@/components";
 import { Class, Prisma, Student } from "@prisma/client";
 import prisma from "@/lib/prisma";
+import { useRole } from "@/hooks";
 import { RECORDS_PER_PAGE } from "@/constants";
+import { FormModal, Pagination, Table } from "@/components";
 
 type StudentList = Student & { class: Class };
+
+const { role } = await useRole();
 
 const columns = [
   { header: "Info", accessor: "info" },
@@ -30,10 +32,14 @@ const columns = [
     accessor: "address",
     className: "hidden md:table-cell",
   },
-  {
-    header: "Actions",
-    accessor: "actions",
-  },
+  ...(role === "admin"
+    ? [
+        {
+          header: "Actions",
+          accessor: "actions",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: StudentList) => (

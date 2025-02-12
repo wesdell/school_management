@@ -1,10 +1,12 @@
 import { Class, Prisma, Teacher } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { role } from "@/mock/data";
+import { useRole } from "@/hooks";
 import { RECORDS_PER_PAGE } from "@/constants";
 import { FormModal, Pagination, Table } from "@/components";
 
 type ClassList = Class & { supervisor: Teacher };
+
+const { role } = await useRole();
 
 const columns = [
   { header: "Class", accessor: "class" },
@@ -23,10 +25,14 @@ const columns = [
     accessor: "supervisor",
     className: "hidden md:table-cell",
   },
-  {
-    header: "Actions",
-    accessor: "actions",
-  },
+  ...(role === "admin"
+    ? [
+        {
+          header: "Actions",
+          accessor: "actions",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: ClassList) => (
