@@ -1,6 +1,6 @@
 import { Announcement, Class, Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { useRole } from "@/hooks";
+import { useRole, useUserId } from "@/hooks";
 import { RECORDS_PER_PAGE } from "@/constants";
 import { FormModal, Pagination, Table } from "@/components";
 
@@ -32,7 +32,7 @@ const renderRow = (item: AnnouncementList) => (
     className="text-sm border-b border-gray-200 even:bg-slate-50 hover:bg-purpleLight"
   >
     <td className="flex items-center gap-4 p-4">{item.title}</td>
-    <td>{item.class.name}</td>
+    <td>{item.class?.name || " - "}</td>
     <td className="hidden md:table-cell">
       {new Intl.DateTimeFormat("en-US").format(item.date)}
     </td>
@@ -54,6 +54,7 @@ export default async function ListAnnouncements({
 }: {
   searchParams: { [_: string]: string | undefined };
 }) {
+  const { userId } = await useUserId();
   const { page, ...params } = await searchParams;
   const actualPage = page ? parseInt(page) : 1;
 
@@ -73,6 +74,16 @@ export default async function ListAnnouncements({
       }
     }
   }
+
+  const roleConditions = {
+    teacher: { lessons: { some: { teacherId: userId! } } },
+    student: { students: { some: { id: userId! } } },
+    parent: { students: { some: { parentId: userId! } } },
+  };
+  query.OR = [
+    { classId: null },
+    { class: roleConditions[role as keyof typeof roleConditions] } || {},
+  ];
 
   const [announcements, count] = await prisma.$transaction([
     prisma.announcement.findMany({
