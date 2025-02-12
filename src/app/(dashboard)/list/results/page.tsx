@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { role } from "@/mock/data";
+import { useRole, useUserId } from "@/hooks";
 import { RECORDS_PER_PAGE } from "@/constants";
 import { FormModal, Pagination, Table } from "@/components";
 
@@ -15,6 +15,8 @@ type ResultList = {
   className: string;
   startTime: Date;
 };
+
+const { role } = await useRole();
 
 const columns = [
   { header: "Title", accessor: "title" },
@@ -39,10 +41,14 @@ const columns = [
     accessor: "date",
     className: "hidden md:table-cell",
   },
-  {
-    header: "Actions",
-    accessor: "actions",
-  },
+  ...(role === "admin"
+    ? [
+        {
+          header: "Actions",
+          accessor: "actions",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: ResultList) => (
@@ -60,7 +66,7 @@ const renderRow = (item: ResultList) => (
     </td>
     <td>
       <div className="flex items-center gap-2">
-        {role === "admin" && (
+        {(role === "admin" || role === "teacher") && (
           <>
             <FormModal table="result" type="update" data={item} />
             <FormModal table="result" type="delete" id={item.id} />
@@ -76,6 +82,7 @@ export default async function ListResults({
 }: {
   searchParams: { [_: string]: string | undefined };
 }) {
+  const { userId } = await useUserId();
   const { page, ...params } = await searchParams;
   const actualPage = page ? parseInt(page) : 1;
 
@@ -100,6 +107,29 @@ export default async function ListResults({
           }
         }
       }
+    }
+  }
+
+  switch (role) {
+    case "teacher": {
+      query.OR = [
+        { exam: { lesson: { teacherId: userId! } } },
+        { assignment: { lesson: { teacherId: userId! } } },
+      ];
+      break;
+    }
+    case "student": {
+      query.studentId = userId!;
+      break;
+    }
+    case "parent": {
+      query.student = {
+        parentId: userId!,
+      };
+      break;
+    }
+    default: {
+      break;
     }
   }
 

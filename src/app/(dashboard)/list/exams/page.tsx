@@ -1,12 +1,14 @@
 import { Class, Exam, Prisma, Subject, Teacher } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { role } from "@/mock/data";
+import { useRole, useUserId } from "@/hooks";
 import { RECORDS_PER_PAGE } from "@/constants";
 import { FormModal, Pagination, Table } from "@/components";
 
 type ExamList = Exam & {
   lesson: { class: Class; subject: Subject; teacher: Teacher };
 };
+
+const { role } = await useRole();
 
 const columns = [
   { header: "Subject", accessor: "subject" },
@@ -25,6 +27,14 @@ const columns = [
     header: "Actions",
     accessor: "actions",
   },
+  ...(role === "admin" || role === "teacher"
+    ? [
+        {
+          header: "Actions",
+          accessor: "actions",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: ExamList) => (
@@ -40,7 +50,7 @@ const renderRow = (item: ExamList) => (
     </td>
     <td>
       <div className="flex items-center gap-2">
-        {role === "admin" && (
+        {(role === "admin" || role === "teacher") && (
           <>
             <FormModal table="exam" type="update" data={item} />
             <FormModal table="exam" type="delete" id={item.id} />
@@ -56,27 +66,27 @@ export default async function ListExams({
 }: {
   searchParams: { [_: string]: string | undefined };
 }) {
+  const { userId } = await useUserId();
   const { page, ...params } = await searchParams;
   const actualPage = page ? parseInt(page) : 1;
 
   const query: Prisma.ExamWhereInput = {};
+  query.lesson = {};
   if (params) {
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined) {
         switch (key) {
           case "classId": {
-            query.lesson = { classId: parseInt(value) };
+            query.lesson.classId = parseInt(value);
             break;
           }
           case "teacherId": {
-            query.lesson = { teacherId: value };
+            query.lesson.teacherId = value;
             break;
           }
           case "search": {
-            query.lesson = {
-              subject: {
-                name: { contains: value, mode: "insensitive" },
-              },
+            query.lesson.subject = {
+              name: { contains: value, mode: "insensitive" },
             };
             break;
           }
@@ -85,6 +95,36 @@ export default async function ListExams({
           }
         }
       }
+    }
+  }
+
+  switch (role) {
+    case "teacher": {
+      query.lesson.teacherId = userId!;
+      break;
+    }
+    case "student": {
+      query.lesson.class = {
+        students: {
+          some: {
+            id: userId!,
+          },
+        },
+      };
+      break;
+    }
+    case "parent": {
+      query.lesson.class = {
+        students: {
+          some: {
+            parentId: userId!,
+          },
+        },
+      };
+      break;
+    }
+    default: {
+      break;
     }
   }
 
