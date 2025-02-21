@@ -1,6 +1,6 @@
 import {
   Announcements,
-  AttendanceChart,
+  AttendanceChartContainer,
   CountChartContainer,
   EventCalendar,
   FinanceChart,
@@ -22,7 +22,7 @@ export default function Admin() {
             <CountChartContainer />
           </div>
           <div className="w-full lg:w-2/3 h-[450px]">
-            <AttendanceChart />
+            <AttendanceChartContainer />
           </div>
         </div>
         <div className="w-full h-[500px]">
