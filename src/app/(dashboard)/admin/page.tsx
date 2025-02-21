@@ -12,10 +12,10 @@ export default function Admin() {
     <div className="flex flex-col gap-4 p-4 md:flex-row">
       <div className="flex flex-col gap-8 w-full lg:w-2/3">
         <div className="flex justify-between flex-wrap gap-4">
+          <UserCard type="admin" />
           <UserCard type="student" />
           <UserCard type="teacher" />
           <UserCard type="parent" />
-          <UserCard type="staff" />
         </div>
         <div className="flex gap-4 flex-col lg:flex-row">
           <div className="w-full lg:w-1/3 h-[450px]">
