@@ -1,8 +1,8 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { useUserId } from "@/hooks";
 import prisma from "@/lib/prisma";
+import { useUserId } from "@/hooks";
 
 export const Announcements = async () => {
   const { userId } = await useUserId();
