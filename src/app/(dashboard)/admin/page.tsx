@@ -2,12 +2,16 @@ import {
   Announcements,
   AttendanceChartContainer,
   CountChartContainer,
-  EventCalendar,
+  EventCalendarContainer,
   FinanceChart,
   UserCard,
 } from "@/components";
 
-export default function Admin() {
+export default function Admin({
+  searchParams,
+}: {
+  searchParams: { [_: string]: string | undefined };
+}) {
   return (
     <div className="flex flex-col gap-4 p-4 md:flex-row">
       <div className="flex flex-col gap-8 w-full lg:w-2/3">
@@ -30,7 +34,7 @@ export default function Admin() {
         </div>
       </div>
       <div className="flex flex-col gap-8 w-full lg:w-1/3">
-        <EventCalendar />
+        <EventCalendarContainer searchParams={searchParams} />
         <Announcements />
       </div>
     </div>
